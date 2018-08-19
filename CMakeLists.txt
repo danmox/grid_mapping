@@ -82,3 +82,7 @@ add_executable(transform_grid_test src/transform_grid_test.cpp)
 add_dependencies(transform_grid_test ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(transform_grid_test ${PROJECT_NAME} ${catkin_LIBRARIES}
   ${OpenCV_LIBS})
+
+add_executable(grid_test src/grid_test.cpp)
+target_link_libraries(grid_test ${PROJECT_NAME} ${catkin_LIBRARIES}
+  ${OpenCV_LIBS})

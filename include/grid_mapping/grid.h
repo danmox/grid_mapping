@@ -28,7 +28,8 @@ class Grid : public GridBase
 
     void expandMap(const Point, const Point);
 
-    friend std::ostream& operator<<(std::ostream& out, const Grid& grid);
+    template <class H>
+    friend std::ostream& operator<<(std::ostream& out, const Grid<H>& grid);
 };
 
 

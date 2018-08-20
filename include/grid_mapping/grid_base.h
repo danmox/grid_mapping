@@ -48,7 +48,8 @@ class GridBase
     // neighbor cell methods
     std::vector<int> neighborIndices(const int cell, const int rad=1) const;
     std::vector<int> neighborIndices(const int, const double) const;
-    
+    std::vector<int> fourConnectedNeighborIndices(const int) const;
+
     // raycasting methods
     void bbxIntersection(const Point, Point&) const;
     std::vector<int> rayCast(const Point, Point) const;

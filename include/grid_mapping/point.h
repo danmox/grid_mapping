@@ -17,7 +17,7 @@ class Point
     Point(double x_, double y_) : x(x_), y(y_) {}
 
     void components(double& x_, double& y_) const {x_ = x; y_ = y;}
-    
+
     double norm() const {sqrt(pow(x, 2.0) + pow(y, 2.0));}
     double max() const {return x > y ? x : y;}
     Point abs() const {return Point(fabs(x), fabs(y));}
@@ -41,7 +41,7 @@ class Point
 
     friend std::ostream& operator<<(std::ostream& out, const Point p)
     {
-      out << "(" << p.x << ", " << p.y << ")";
+      out << "{" << p.x << ", " << p.y << "}";
       return out;
     }
 

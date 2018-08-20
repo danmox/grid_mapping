@@ -179,6 +179,27 @@ int_vec GridBase::neighborIndices(const int cell, const double rad) const
   return neighborIndices(cell, (int)(roundToMapRes(rad)/resolution));
 }
 
+int_vec GridBase::fourConnectedNeighborIndices(const int cell) const
+{
+  // determine 2D indices
+  int col = cell % w;
+  int row = cell / w;
+
+  int_vec neighbors;
+
+  if (col-1 >= 0)
+    neighbors.push_back(cell-1);
+  if (col+1 < w)
+    neighbors.push_back(cell+1);
+  if (row-1 >= 0)
+    neighbors.push_back(cell-w);
+  if (row+1 < h)
+    neighbors.push_back(cell+w);
+
+  return neighbors;
+}
+
+
 void GridBase::bbxIntersection(const Point p1, Point& p2) const
 {
   // make sure the start point is inside the bbx and end point is not

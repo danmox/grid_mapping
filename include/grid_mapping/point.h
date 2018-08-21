@@ -4,6 +4,7 @@
 #include <math.h>
 #include <iostream>
 #include <geometry_msgs/TransformStamped.h>
+#include <geometry_msgs/PoseStamped.h>
 #include <tf/transform_datatypes.h>
 
 namespace grid_mapping {
@@ -15,6 +16,9 @@ class Point
 
     Point() : x(0), y(0) {}
     Point(double x_, double y_) : x(x_), y(y_) {}
+    Point(const geometry_msgs::PoseStamped& msg) :
+      x(msg.pose.position.x), y(msg.pose.position.y)
+    {}
 
     void components(double& x_, double& y_) const {x_ = x; y_ = y;}
 

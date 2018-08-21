@@ -27,7 +27,7 @@ generate_messages(DEPENDENCIES std_msgs geometry_msgs)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS 
+  CATKIN_DEPENDS
     roscpp
     std_msgs
     nav_msgs

@@ -27,7 +27,7 @@ Point GridBase::roundToMapRes(const Point p) const
   return Point(roundToMapRes(p.x), roundToMapRes(p.y));
 }
 
-// the origin of each cell is at its center; points on the south 
+// the origin of each cell is at its center; points on the south
 // and west cell sides are included
 bool GridBase::inBounds(const double x, const double y) const
 {
@@ -67,16 +67,16 @@ Point GridBase::topCorner() const
 void GridBase::indexToPosition(const int cell, double& x, double& y) const
 {
   x = (cell % w) * resolution + origin.x;
-  y = (cell / w) * resolution + origin.y; 
+  y = (cell / w) * resolution + origin.y;
 }
 
 Point GridBase::indexToPosition(const int cell) const
 {
-    return Point((cell % w) * resolution + origin.x, 
+    return Point((cell % w) * resolution + origin.x,
         (cell / w) * resolution + origin.y);
 }
 
-bool GridBase::indexToPositionChecked(const int cell, double& x, double& y) 
+bool GridBase::indexToPositionChecked(const int cell, double& x, double& y)
   const
 {
   if (cell < 0 || cell > w*h-1)
@@ -107,7 +107,7 @@ int GridBase::positionToIndex(const Point p) const
   return positionToIndex(p.x, p.y);
 }
 
-bool GridBase::positionToIndexChecked(const double x, const double y, 
+bool GridBase::positionToIndexChecked(const double x, const double y,
     int& index) const
 {
   if (!inBounds(x, y))
@@ -209,7 +209,7 @@ void GridBase::bbxIntersection(const Point p1, Point& p2) const
     ROS_FATAL_STREAM("GridBase::bbxIntersection(...): p1 " << p1 << " outside "
         "of current map bounds: " << bbxMin() << " " << bbxMax());
     exit(EXIT_FAILURE);
-  } 
+  }
   if (inBounds(p2))
     return;
 

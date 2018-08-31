@@ -24,9 +24,12 @@ class Grid : public GridBase
     Grid(const nav_msgs::OccupancyGrid::ConstPtr&);
 
     virtual void update(const Grid*);
-    virtual void update(const Point, const int, const int);
+    virtual T updateCell(T, T);
 
     void expandMap(const Point, const Point);
+    void insertMap(const nav_msgs::OccupancyGrid::ConstPtr&);
+
+    nav_msgs::OccupancyGrid createROSMsg() const;
 
     template <class H>
     friend std::ostream& operator<<(std::ostream& out, const Grid<H>& grid);

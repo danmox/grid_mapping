@@ -83,8 +83,8 @@ void Grid<T>::expandMap(const Point p_min, const Point p_max)
 }
 
 
-template <class T>
-std::ostream& operator<<(std::ostream& out, const Grid<T>& grid)
+template <class H>
+std::ostream& operator<<(std::ostream& out, const Grid<H>& grid)
 {
   std::cout << std::endl;
   std::cout << "info:" << std::endl;

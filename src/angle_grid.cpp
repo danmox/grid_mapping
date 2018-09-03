@@ -213,55 +213,55 @@ void AngleGrid::insertMap(const OccupancyGridConstPtr& in_map_msg,
   }
 }
 
-OccupancyGridPtr AngleGrid::createROSMsg()
+OccupancyGrid::ConstPtr AngleGrid::createROSMsg() const
 {
   static int seq = 0;
 
-  OccupancyGridPtr grid(new OccupancyGrid);
+  OccupancyGrid grid;
 
   // make sure ros::Time is running
   if (!ros::Time::isValid())
     ros::Time::init();
 
-  grid->header.seq = seq++;
-  grid->header.stamp = ros::Time::now();
-  grid->header.frame_id = frame_id;
-  grid->resolution = resolution;
-  grid->width = w;
-  grid->height = h;
-  grid->layers = layers;
-  grid->bins = bins;
+  grid.header.seq = seq++;
+  grid.header.stamp = ros::Time::now();
+  grid.header.frame_id = frame_id;
+  grid.resolution = resolution;
+  grid.width = w;
+  grid.height = h;
+  grid.layers = layers;
+  grid.bins = bins;
 
-  grid->origin.x = origin.x;
-  grid->origin.y = origin.y;
+  grid.origin.x = origin.x;
+  grid.origin.y = origin.y;
 
-  grid->data = data;
+  grid.data = data;
 
-  return grid;
+  return OccupancyGrid::ConstPtr(new OccupancyGrid(grid));
 }
 
-nav_msgs::OccupancyGridPtr AngleGrid::createROSOGMsg()
+nav_msgs::OccupancyGrid::ConstPtr AngleGrid::createROSOGMsg() const
 {
   static int seq = 0;
 
-  nav_msgs::OccupancyGridPtr grid(new nav_msgs::OccupancyGrid);
+  nav_msgs::OccupancyGrid grid;
 
   // make sure ros::Time is running
   if (!ros::Time::isValid())
     ros::Time::init();
 
-  grid->header.seq = seq++;
-  grid->header.stamp = ros::Time::now();
-  grid->header.frame_id = frame_id;
-  grid->info.resolution = resolution;
-  grid->info.width = w;
-  grid->info.height = h;
-  grid->info.origin.position.x = origin.x;
-  grid->info.origin.position.y = origin.y;
+  grid.header.seq = seq++;
+  grid.header.stamp = ros::Time::now();
+  grid.header.frame_id = frame_id;
+  grid.info.resolution = resolution;
+  grid.info.width = w;
+  grid.info.height = h;
+  grid.info.origin.position.x = origin.x;
+  grid.info.origin.position.y = origin.y;
 
   // convert perspective (multi-layered) grid to 2D grid
   size_t layer_size = w*h;
-  grid->data = std::vector<signed char>(layer_size, 50);
+  grid.data = std::vector<signed char>(layer_size, 50);
   for (size_t i = 0; i < layer_size; ++i) {
 
     int min = 50, max = 50;
@@ -273,12 +273,12 @@ nav_msgs::OccupancyGridPtr AngleGrid::createROSOGMsg()
 
     // give preference to occupied cells
     if (max > 50)
-      grid->data[i] = max;
+      grid.data[i] = max;
     else if (min < 50)
-      grid->data[i] = min;
+      grid.data[i] = min;
   }
 
-  return grid;
+  return nav_msgs::OccupancyGrid::ConstPtr(new nav_msgs::OccupancyGrid(grid));
 }
 
 } // namespace grid_mapping

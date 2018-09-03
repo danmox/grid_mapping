@@ -29,9 +29,8 @@ int main(int argc, char** argv)
   }
 
   AngleGrid in_grid(Point(-10.0, -10.0), 0.1, 1, 1);
-  grid_mapping::OccupancyGridPtr msg = grid.createROSMsg();
-  grid_mapping::OccupancyGridConstPtr msg_ptr(new OccupancyGrid(*msg));
-  in_grid.insertMap(msg_ptr);
+  grid_mapping::OccupancyGrid::ConstPtr msg = grid.createROSMsg();
+  in_grid.insertMap(msg);
   for (int i = 0; i < in_grid.layers; ++i) {
     cv::Mat img = createGridImage(in_grid, i);
     displayImageComplement(img, "in_grid layers");

@@ -37,8 +37,8 @@ class AngleGrid : public OccGrid
     virtual void insertScan(const sensor_msgs::LaserScanConstPtr&,
         const geometry_msgs::Pose2DConstPtr&);
 
-    OccupancyGridPtr createROSMsg();
-    nav_msgs::OccupancyGridPtr createROSOGMsg();
+    OccupancyGrid::ConstPtr createROSMsg() const;
+    nav_msgs::OccupancyGrid::ConstPtr createROSOGMsg() const;
 };
 
 } // namespace grid_mapping

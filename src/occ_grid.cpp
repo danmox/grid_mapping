@@ -24,7 +24,7 @@ OccGrid::OccGrid(Point origin_, double res, int w_, int h_, bool alloc_data) :
 
 OccGrid::OccGrid(const nav_msgs::OccupancyGrid::ConstPtr& msg) :
   GridBase(Point(msg->info.origin.position.x, msg->info.origin.position.y),
-      msg->info.resolution, msg->info.width, msg->info.height), 
+      msg->info.resolution, msg->info.width, msg->info.height),
   range_min(0.45), range_max(4.0)
 {
   data.reserve(msg->data.size());
@@ -115,18 +115,18 @@ std::vector<double> OccGrid::filterLaserScan(const sensor_msgs::
       continue;
     }
 
-    // try to guess if the large block of NANs should be 0.0 (within the 
+    // try to guess if the large block of NANs should be 0.0 (within the
     // sensor's minimum range) or scan->range_max (beyond the sensor's maximum
     // range) by checking for adjacent valid values
     double last_range = 0.0;
-    if (nan_it != end) 
+    if (nan_it != end)
       last_range = *nan_it;
     else if (it != ranges.begin())
       last_range = *(it-1);
     else // the entire laser scan is NANs
       return std::vector<double>(ranges.size(), scan->range_max);
 
-    // if the last valid range was closer to the sensor's maximum range than 
+    // if the last valid range was closer to the sensor's maximum range than
     // its minimum range, assume that the NANs should be the maximum range
     if (fabs(scan->range_max-last_range) < fabs(last_range-scan->range_min))
       std::fill(it, nan_it, scan->range_max);
@@ -139,7 +139,7 @@ std::vector<double> OccGrid::filterLaserScan(const sensor_msgs::
   return ranges;
 }
 
-void OccGrid::insertScan(const sensor_msgs::LaserScanConstPtr& scan, 
+void OccGrid::insertScan(const sensor_msgs::LaserScanConstPtr& scan,
     const geometry_msgs::Pose2DConstPtr& pose)
 {
   // check if scan falls within the map; resize the map if necessary
@@ -188,7 +188,7 @@ void OccGrid::insertPanorama(const std::string bagfile)
 
   // extract depth camera info
   sensor_msgs::CameraInfo camera_info;
-  for (auto m : rosbag::View(bag, rosbag::TopicQuery("depth_camera_info"))) {
+  for (auto m : rosbag::View(bag, rosbag::TopicQuery("/depth_camera_info"))) {
     auto msg = m.instantiate<sensor_msgs::CameraInfo>();
     if (msg) {
       camera_info = *msg;
@@ -203,11 +203,11 @@ void OccGrid::insertPanorama(const std::string bagfile)
 
   std::deque<geometry_msgs::PoseStamped> camera_pose;
   std::deque<sensor_msgs::Image> imgs;
-  std::vector<std::string> topics = {"camera_pose", "depth"};
+  std::vector<std::string> topics = {"/camera_pose", "/depth"};
   for (auto m : rosbag::View(bag, rosbag::TopicQuery(topics))) {
-    if (m.getTopic().compare("camera_pose") == 0)
+    if (m.getTopic().compare("/camera_pose") == 0)
       camera_pose.push_back(*m.instantiate<geometry_msgs::PoseStamped>());
-    else if (m.getTopic().compare("depth") == 0)
+    else if (m.getTopic().compare("/depth") == 0)
       imgs.push_back(*m.instantiate<sensor_msgs::Image>());
 
     if (!camera_pose.empty() && !imgs.empty()) {
@@ -265,7 +265,7 @@ void OccGrid::insertPanorama(const std::string bagfile)
 
   // extract panorama pose
   geometry_msgs::PoseStamped pan_pose;
-  for (auto m : rosbag::View(bag, rosbag::TopicQuery("panorama_pose"))) {
+  for (auto m : rosbag::View(bag, rosbag::TopicQuery("/panorama_pose"))) {
     auto msg = m.instantiate<geometry_msgs::PoseStamped>();
     if (msg) {
       pan_pose = *msg;

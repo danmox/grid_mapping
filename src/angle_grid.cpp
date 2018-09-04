@@ -113,10 +113,10 @@ void AngleGrid::updateRobotCells(const Point po, double robot_radius)
   }
 }
 
-void AngleGrid::insertScan(const sensor_msgs::LaserScanConstPtr& scan, 
+void AngleGrid::insertScan(const sensor_msgs::LaserScanConstPtr& scan,
     const geometry_msgs::Pose2DConstPtr& pose)
 {
-  // check if scan falls within the map; resize the map if necessary
+// check if scan falls within the map; resize the map if necessary
   Point scan_origin(pose->x, pose->y);
   Point scan_bbx_min = scan_origin - scan->range_max;
   Point scan_bbx_max = scan_origin + scan->range_max;
